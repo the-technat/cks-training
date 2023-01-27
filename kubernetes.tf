@@ -21,9 +21,6 @@ module "kubernetes" {
       labels      = {}
       location    = "hel1"
       volumes     = []
-      ssh_user    = ""
-      ssh_keys    = []
-      ssh_port    = 0
     }
   ]
 
@@ -35,9 +32,6 @@ module "kubernetes" {
       labels      = {}
       location    = "hel1"
       volumes     = []
-      ssh_user    = ""
-      ssh_keys    = []
-      ssh_port    = 0
     }
   ]
 
