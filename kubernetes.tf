@@ -14,7 +14,7 @@ module "kubernetes" {
   master_nodes = [
     {
       name        = "hawk"
-      server_type = "cpx11"
+      server_type = "cpx31"
       image       = "ubuntu-22.04"
       labels      = {}
       location    = "hel1"
@@ -25,7 +25,7 @@ module "kubernetes" {
   worker_nodes = [
     {
       name        = "minion-0"
-      server_type = "cx11"
+      server_type = "cpx31"
       image       = "ubuntu-22.04"
       labels      = {}
       location    = "hel1"
