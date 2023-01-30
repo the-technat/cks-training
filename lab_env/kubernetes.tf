@@ -17,7 +17,7 @@ module "kubernetes" {
       server_type = "cpx31"
       image       = "ubuntu-22.04"
       labels      = {}
-      location    = "hel1"
+      location    = "fsn1"
       volumes     = []
     }
   ]
@@ -28,7 +28,7 @@ module "kubernetes" {
       server_type = "cpx31"
       image       = "ubuntu-22.04"
       labels      = {}
-      location    = "hel1"
+      location    = "fsn1"
       volumes     = []
     }
   ]
