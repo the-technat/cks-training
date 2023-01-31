@@ -10,18 +10,4 @@ See [lab_env](./lab_env) for how to setup.
 
 Probably already known but here again, a [Vulnerability Database](https://nvd.nist.gov/vuln/search).
 
-### Runtime
-
-- [Kata](https://katacontainers.io/): Drop-In container engine that uses lightweigth VMs instead of traditional containers for more isolation
-- [gVisor](https://gvisor.dev/): Same as kata but from Google
-
-### Container Isolation
-
-Basically any CNI that implements `NetworkPolicy`, e.g:
-
-- [Cilium](https://cilium.io)
-- [Weave Net](https://github.com/weaveworks/weave)
-
-### Scanning
-
-- [Trivy Operator](https://github.com/aquasecurity/trivy-operator): Magic operator that can do all sorts of scanning about images, resources, integrates into OPA
+See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awesome-cks-tools) for some cool security tools.
