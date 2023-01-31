@@ -34,8 +34,9 @@ EOF
 sudo kubeadm init --upload-certs --config config.yaml
 ```
 
-Note 1: weave net requires tcp 6783 & udp 6783/6784 node-to-node connectivity which is by default blocked in my TF setup
-Note 2: Some exercises try out new container engines that need kubeadm/containerd, that's why my bootstrap assumes you are using containerd
+Note 1: weave net requires tcp 6783 & udp 6783/6784 node-to-node connectivity
+
+Note 2: I'm using containerd using systemd cgroups. I don't see any reason for using docker
 
 ### Weave Net
 

@@ -11,13 +11,55 @@ module "kubernetes" {
   ip_mode               = "ipv4"
   bootstrap_nodes       = true
 
+  additional_fw_rules_master = [
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "6783"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "weave net"
+    },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "6783-6784"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "weave net"
+    },
+  ]
+
+  additional_fw_rules_worker = [
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "6783"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "weave net"
+    },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "6783-6784"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "weave net"
+    },
+  ]
+
   master_nodes = [
     {
       name        = "hawk"
-      server_type = "cpx31"
+      server_type = "cx21"
       image       = "ubuntu-22.04"
-      labels      = {}
       location    = "fsn1"
+      labels      = {}
       volumes     = []
     }
   ]
@@ -27,8 +69,8 @@ module "kubernetes" {
       name        = "minion-0"
       server_type = "cpx31"
       image       = "ubuntu-22.04"
-      labels      = {}
       location    = "fsn1"
+      labels      = {}
       volumes     = []
     }
   ]
