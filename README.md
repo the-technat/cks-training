@@ -11,3 +11,7 @@ See [lab_env](./lab_env) for how to setup.
 Probably already known but here again, a [Vulnerability Database](https://nvd.nist.gov/vuln/search).
 
 See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awesome-cks-tools) for some cool security tools.
+
+## Open Topics for learning
+
+- Difference of containerd & CRI-O
