@@ -87,5 +87,3 @@ kubectl apply -f clusterissuer-le.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
 kubectl patch -n ingress-nginx svc ingress-nginx-controller  --type='json' -p='[{"op": "add", "path": "/metadata/annotations", "value":{"load-balancer.hetzner.cloud/network-zone":"eu-central"}}]' 
 ```
-
-### dexidp
