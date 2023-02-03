@@ -1,0 +1,71 @@
+config:
+  issuer: https://dex.alleaffengaffen.ch
+  storage:
+    type: kubernetes
+    config:
+      inCluster: true
+  oauth2:
+    skipApprovalScreen: true
+  connectors:
+    - type: github
+      id: github
+      name: GitHub
+      config:
+        clientID: $GITHUB_CLIENT_ID
+        clientSecret: $GITHUB_CLIENT_SECRET
+        redirectURI: https://dex.alleaffengaffen.ch/callback
+        orgs:
+          - name: alleaffengaffen
+  staticClients:
+    - id: kubernetes
+      redirectURIs:
+        - http://localhost:8000
+        - http://localhost:18000
+      name: "Kubernetes"
+      secret: KkEHL61EJtr8ssmnqfzh
+
+envVars:
+  - name: GITHUB_CLIENT_ID
+    valueFrom:
+      secretKeyRef:
+        name: github-client
+        key: client-id
+  - name: GITHUB_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: github-client
+        key: client-secret
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+  hosts:
+    - host: dex.alleaffengaffen.ch
+      paths:
+        - path: /
+          pathType: Prefix
+
+  tls:
+    - secretName: dex-tls
+      hosts:
+        - dex.alleaffengaffen.ch
+
+networkPolicy:
+  enabled: false
+  egressRules: []
+  # Allow DNS egress traffic
+  # - ports:
+  #     - port: 53
+  #       protocol: UDP
+  #     - port: 53
+  #       protocol: TCP
+  # Example to allow LDAP connector to reach LDAPs port on 1.2.3.4 server
+  #  - to:
+  #      - ipBlock
+  #          cidr: 1.2.3.4/32
+  #    ports:
+  #      - port: 636
+  #        protocol: TCP
