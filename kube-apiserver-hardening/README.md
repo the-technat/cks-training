@@ -76,3 +76,47 @@ kubectl oidc-login setup \
 ```
 
 Just follow the printed commands to add a clusterrolebinding and configure your kubeconfig.
+
+## ETCD Encryption at rest
+
+[Reference Docs](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/)
+
+### Option 1: static key saved on the master node
+
+To encrypt your secrets (or other objects stored in etcd), write a config file like this one in `/etc/kubernetes/pki` (or somewhere else and mount it into the kube-apiserver):
+
+```yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+name: DefaultEncryption
+resources:
+  - resources:
+    - secrets
+    # - configmaps
+    providers:
+    - aescbc:
+        keys:
+        - name: firstkey
+          secret: JJxfTo7NfUh+nLv+bHJuxcWdG2tHKwZlyqXT5JIytgs= # head -c 32 /dev/urandom | base64
+    - identity: {}
+```
+
+And then tell the api-server where the encryption config can be found:
+
+```yaml
+commands:
+- kube-apiserver
+- --encryption-provider-config=/etc/kubernetes/pki/config.yaml
+```
+
+A restart later, new secrets will be encrypted. For existing secrets, you must recreate them. One way is bulk-recreate like so:
+
+```bash
+kubectl get secrets -A -o json | kubectl replace -f -
+```
+
+Why does this work? `providers` is a list. The latest entry is used to encrypt, but all can be used to decrypt. So as long as you have the provider `identity` (no encryption at all) or another key present in the list, reencryption works exactly like that.
+
+### Option 2: using KMS
+
+See <https://github.com/ondat/trousseau/wiki/Trousseau-Deployment> for an example using Hashicorp Vault.
