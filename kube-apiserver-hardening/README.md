@@ -20,7 +20,13 @@ We are running dex on K8s. You need:
 - cert-manager using a ClusterIssuer
 - ingress-nginx to expose dex
 
-See the [lab_env](../lab_env/) for how those are setup.
+#### ingress-nginx
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
+kubectl patch -n ingress-nginx svc ingress-nginx-controller  --type='json' -p='[{"op": "add", "path": "/metadata/annotations", "value":{"load-balancer.hetzner.cloud/network-zone":"eu-central"}}]' 
+kubectl apply -f clusterissuer-le-nginx.yaml clusterissuer-le-staging-nginx.yaml
+```
 
 ### Step 2: Install Dex
 

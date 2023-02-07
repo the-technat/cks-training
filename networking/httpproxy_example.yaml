@@ -1,0 +1,102 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: alleaffengaffen
+    app.kubernetes.io/name: alleaffengaffen
+  name: alleaffengaffen
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pea-alleaffengaffen-ch
+  namespace: alleaffengaffen
+  labels:
+    app.kubernetes.io/name: alleaffengaffen
+spec:
+  commonName: alleaffengaffen.ch
+  dnsNames:
+    - alleaffengaffen.ch
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  secretName: alleaffengaffen-tls
+---
+# https://projectcontour.io/docs/v1.24.0/config/fundamentals/
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: basic
+  namespace: alleaffengaffen
+  labels:
+    app.kubernetes.io/name: alleaffengaffen
+spec:
+  virtualhost:
+    fqdn: alleaffengaffen.ch
+    tls:
+      secretName: alleaffengaffen-tls
+  routes:
+    - conditions:
+        - prefix: /
+      services:
+        - name: alleaffengaffen
+          port: 80
+      loadBalancerPolicy:
+        strategy: Cookie
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: alleaffengaffen
+  name: alleaffengaffen
+  namespace: alleaffengaffen
+spec:
+  internalTrafficPolicy: Cluster
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: alleaffengaffen
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: alleaffengaffen
+  name: alleaffengaffen
+  namespace: alleaffengaffen
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 4
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alleaffengaffen
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: alleaffengaffen
+    spec:
+      containers:
+        - image: ghcr.io/alleaffengaffen/alleaffengaffen:main
+          imagePullPolicy: IfNotPresent
+          name: alleaffengaffen
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

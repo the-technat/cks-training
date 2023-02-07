@@ -56,6 +56,10 @@ echo 'alias k=kubectl' >>~/.bashrc
 echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 ```
 
+## Additional Infra Apps
+
+Some apps you just want to have configured.
+
 ### Metrics server
 
 Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs> and can then be applied as usual.
@@ -75,13 +79,6 @@ Apply like so:
 
 ```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
-kubectl apply -f clusterissuer-le-staging.yaml
-kubectl apply -f clusterissuer-le.yaml
 ```
 
-### ingress-nginx
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
-kubectl patch -n ingress-nginx svc ingress-nginx-controller  --type='json' -p='[{"op": "add", "path": "/metadata/annotations", "value":{"load-balancer.hetzner.cloud/network-zone":"eu-central"}}]' 
-```
+Issuers are applied where necessary.

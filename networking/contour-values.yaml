@@ -1,0 +1,16 @@
+## @param configInline [object] Specifies Contour's configuration directly in YAML format
+## When configInline is used, Helm manages Contour's configuration ConfigMap as
+## part of the release, and existingConfigMap is ignored.
+## Refer to https://projectcontour.io/docs/latest/configuration for available options.
+##
+configInline:
+  disablePermitInsecure: false
+  tls:
+    fallback-certificate: {}
+  accesslog-format: envoy
+
+envoy:
+  service:
+    type: LoadBalancer
+    annotations:
+      load-balancer.hetzner.cloud/network-zone: eu-central

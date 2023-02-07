@@ -49,15 +49,16 @@ We are installing contour for this:
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install my-release bitnami/contour --namespace projectcontour --create-namespace
-kubectl patch -n ingress-nginx svc ingress-nginx-controller  --type='json' -p='[{"op": "add", "path": "/metadata/annotations", "value":{"load-balancer.hetzner.cloud/network-zone":"eu-central"}}]' 
+helm upgrade -i contour bitnami/contour --namespace projectcontour --create-namespace -f contour-values.yaml
+kubectl apply -f clusterissuer-le-contour.yaml clusterissuer-le-staging-contour.yaml
 ```
 
 A dummy app is always a good idea:
 
 ```bash
-kubectl apply -f <https://projectcontour.io/examples/httpbin.yaml>
-kubectl patch ingress httpbin -p '{"spec":{"ingressClassName": "contour"}}'
+kubectl apply -f httpproxy_example.yaml
 ```
+
+The app uses a `HTTPProxy` by default and of course deployes THE only alleaffengaffen app ;)
 
 ## Service Mesh

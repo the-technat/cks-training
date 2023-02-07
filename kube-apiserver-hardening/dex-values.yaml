@@ -38,9 +38,9 @@ envVars:
 
 ingress:
   enabled: true
-  className: "nginx"
+  className: "nginx" # Note: requires ingress-nginx to be deployed
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
 
   hosts:
     - host: dex.alleaffengaffen.ch
