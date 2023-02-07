@@ -10,7 +10,7 @@ metadata:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pea-alleaffengaffen-ch
+  name: alleaffengaffen-ch
   namespace: alleaffengaffen
   labels:
     app.kubernetes.io/name: alleaffengaffen
