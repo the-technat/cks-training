@@ -77,6 +77,53 @@ kubectl oidc-login setup \
 
 Just follow the printed commands to add a clusterrolebinding and configure your kubeconfig.
 
+## Audit Logging
+
+First create an audit-policy:
+
+```yaml
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+- level: Metadata
+```
+
+Note: this will log a lot of lines and quickly generate megabytes of data.
+
+The following command-line options are used to tell the api-server about this:
+
+```yaml
+commands:
+- kube-apiserver
+- --audit-log-maxage=7                                    #<-- Retain age in days
+- --audit-log-maxbackup=2                                 #<-- Max number to retain
+- --audit-log-maxsize=50                                  #<-- Meg size when to rotate
+- --audit-log-path=/var/log/audit.log                     #<-- Where to log
+- --audit-policy-file=/etc/kubernetes/audit-policy.yaml  #<-- Audit policy file
+```
+
+And then persist the log file to the host and mount the config in the pod:
+
+```yaml
+volumeMounts:
+- mountPath: /etc/kubernetes/audit-policy.yaml  
+  name: audit
+  readOnly: true
+- mountPath: /var/log/audit.log                  
+  name: audit-log
+  readOnly: false
+
+volumes:
+- hostPath:                                      
+  path: /etc/kubernetes/audit-policy.yaml
+  type: File
+  name: audit
+- hostPath:
+  path: /var/log/audit.log
+  type: FileOrCreate
+  name: audit-log
+```
+
 ## ETCD Encryption at rest
 
 [Reference Docs](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/)

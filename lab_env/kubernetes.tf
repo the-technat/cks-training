@@ -15,20 +15,38 @@ module "kubernetes" {
     {
       direction         = "in"
       protocol          = "tcp"
-      port              = "6783"
+      port              = "179"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "weave net"
+      description       = "calico networking (bgp)"
     },
     {
       direction         = "in"
       protocol          = "udp"
-      port              = "6783-6784"
+      port              = "4789"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "weave net"
+      description       = "calico networking (vxlan)"
+    },
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "5473"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "calico networking (typha)"
+    },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "51820"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "calico networking (wireguard)"
     },
   ]
 
@@ -36,20 +54,38 @@ module "kubernetes" {
     {
       direction         = "in"
       protocol          = "tcp"
-      port              = "6783"
+      port              = "179"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "weave net"
+      description       = "calico networking (bgp)"
     },
     {
       direction         = "in"
       protocol          = "udp"
-      port              = "6783-6784"
+      port              = "4789"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "weave net"
+      description       = "calico networking (vxlan)"
+    },
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "5473"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "calico networking (typha)"
+    },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "51820"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "calico networking (wireguard)"
     },
   ]
 

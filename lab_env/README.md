@@ -13,8 +13,6 @@ Most CKS courses have the following requirements to your lab setup:
 
 I automated most of the work as one can see in [kubernetes.tf](./kubernetes.tf). My two nodes come pre-booted with all the requirements met to bootstrap the cluster. Note though that I'm doing everything on the public network and have a firewall for each node.
 
-As CNI I use weave net since it's simple, has a network policy engine and is sometimes used in the courses itself.
-
 ### Bootstrap
 
 Spying on the requirements of the course I use the following init-config:
@@ -25,7 +23,7 @@ cat > config.yaml <<EOF
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
 networking:
-  podSubnet: 10.32.0.0/12 # Default of weave net
+  podSubnet: 10.32.0.0/12 
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
@@ -34,13 +32,13 @@ EOF
 sudo kubeadm init --upload-certs --config config.yaml
 ```
 
-Note 1: weave net requires tcp 6783 & udp 6783/6784 node-to-node connectivity
-
-Note 2: I'm using containerd using systemd cgroups. I don't see any reason for using docker
+Note: I'm using containerd using systemd cgroups. I don't see any reason for using docker
 
 ### Weave Net
 
-Can simply be installed like so:
+Prerequisite: weave net requires tcp 6783 & udp 6783/6784 node-to-node connectivity
+
+Then it is installed like so:
 
 ```bash
 kubectl apply -f https://github.com/weaveworks/weave/releases/latest/download/weave-daemonset-k8s.yaml
@@ -69,14 +67,14 @@ kubectl -n kube-system create secret generic hcloud --from-literal=token=<hcloud
 kubectl apply -f  https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/latest/download/ccm.yaml
 ```
 
-Note: fix kubelet external cloud-provider prefix
+Note: requires that the nodes were initialized with `--cloud-provider=external` (should be the default with my terraform module).
 
 ### cert-manager
 
 Apply like so:
 
 ```bash
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
 kubectl apply -f clusterissuer-le-staging.yaml
 kubectl apply -f clusterissuer-le.yaml
 ```
