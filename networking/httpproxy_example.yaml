@@ -57,7 +57,7 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: 80
+      targetPort: 8080
   selector:
     app.kubernetes.io/name: alleaffengaffen
   sessionAffinity: None

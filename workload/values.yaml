@@ -1,0 +1,252 @@
+autogenControllers: none
+podSecurityStandard: baseline
+validationFailureAction: enforce
+
+includeRestrictedPolicies:
+  - disallow-capabilities-strict
+  - disallow-privilege-escalation
+  - require-run-as-non-root-user
+  - require-run-as-nonroot
+  - restrict-volume-types
+
+policyExclude:
+  ## Excludes for baseline Policies
+  ## --------------------------------
+  disallow-capabilities:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+      - resources:
+          namespaces:
+            - tailscale
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: in
+                values:
+                  - tailscale
+  disallow-host-namespaces:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              name: cilium-operator
+              io.cilium/app: operator
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  disallow-host-path:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+              tier: control-plane
+  disallow-host-ports:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              name: cilium-operator
+              io.cilium/app: operator
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  disallow-privileged-containers:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  disallow-selinux:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+  restrict-apparmor-profiles:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
+  ## Excludes for restricted Policies
+  ## --------------------------------
+  disallow-capabilities-strict:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                  - cilium
+                  - hubble-relay
+                  - hubble-ui
+      - resources:
+          namespaces:
+            - kured
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: in
+                values:
+                  - kured
+      - resources:
+          namespaces:
+            - tailscale
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: in
+                values:
+                  - tailscale
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              name: cilium-operator
+              io.cilium/app: operator
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - metrics-server
+  disallow-privilege-escalation:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                  - cilium
+                  - hubble-relay
+                  - hubble-ui
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              name: cilium-operator
+              io.cilium/app: operator
+      - resources:
+          namespaces:
+            - tailscale
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - tailscale
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  require-run-as-non-root-user:
+    any:
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  require-run-as-nonroot:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                  - cilium
+                  - hubble-relay
+                  - hubble-ui
+                  - kube-dns
+      - resources:
+          namespaces:
+            - tailscale
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - tailscale
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              name: cilium-operator
+              io.cilium/app: operator
+      - resources:
+          selector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - kured
+  restrict-volume-types:
+    any:
+      - resources:
+          namespaces:
+            - kube-system
+          selector:
+            matchLabels:
+              k8s-app: cilium
