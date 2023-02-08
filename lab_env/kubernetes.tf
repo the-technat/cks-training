@@ -108,6 +108,14 @@ module "kubernetes" {
       location    = "fsn1"
       labels      = {}
       volumes     = []
+    },
+    {
+      name        = "minion-1"
+      server_type = "cpx11"
+      image       = "ubuntu-22.04"
+      location    = "fsn1"
+      labels      = {}
+      volumes     = []
     }
   ]
 
