@@ -15,3 +15,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 ## Open Topics for learning
 
 - Difference of containerd & CRI-O
+- falco
+  - propery deployment
+  - rules
+  
