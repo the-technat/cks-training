@@ -15,78 +15,61 @@ module "kubernetes" {
     {
       direction         = "in"
       protocol          = "tcp"
-      port              = "179"
+      port              = "4240"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "calico networking (bgp)"
+      description       = "cilium health checks"
     },
     {
       direction         = "in"
       protocol          = "udp"
-      port              = "4789"
+      port              = "8472"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "calico networking (vxlan)"
+      description       = "cilium vxlan overlay"
     },
-    {
-      direction         = "in"
-      protocol          = "tcp"
-      port              = "5473"
-      inject_master_ips = true
-      inject_worker_ips = true
-      source_ips        = []
-      description       = "calico networking (typha)"
-    },
-    {
-      direction         = "in"
-      protocol          = "udp"
-      port              = "51820"
-      inject_master_ips = true
-      inject_worker_ips = true
-      source_ips        = []
-      description       = "calico networking (wireguard)"
-    },
+    # {
+    #   direction         = "in"
+    #   protocol          = "udp"
+    #   port              = "6081"
+    #   inject_master_ips = true
+    #   inject_worker_ips = true
+    #   source_ips        = []
+    #   description       = "cilium geneve overlay"
+    # },
   ]
 
   additional_fw_rules_worker = [
-    {
+ {
       direction         = "in"
       protocol          = "tcp"
-      port              = "179"
+      port              = "4240"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "calico networking (bgp)"
+      description       = "cilium health checks"
     },
     {
       direction         = "in"
       protocol          = "udp"
-      port              = "4789"
+      port              = "8472"
       inject_master_ips = true
       inject_worker_ips = true
       source_ips        = []
-      description       = "calico networking (vxlan)"
+      description       = "cilium vxlan overlay"
     },
-    {
-      direction         = "in"
-      protocol          = "tcp"
-      port              = "5473"
-      inject_master_ips = true
-      inject_worker_ips = true
-      source_ips        = []
-      description       = "calico networking (typha)"
-    },
-    {
-      direction         = "in"
-      protocol          = "udp"
-      port              = "51820"
-      inject_master_ips = true
-      inject_worker_ips = true
-      source_ips        = []
-      description       = "calico networking (wireguard)"
-    },
+    # {
+    #   direction         = "in"
+    #   protocol          = "udp"
+    #   port              = "6081"
+    #   inject_master_ips = true
+    #   inject_worker_ips = true
+    #   source_ips        = []
+    #   description       = "cilium geneve overlay"
+    # },
+   
   ]
 
   master_nodes = [
