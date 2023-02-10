@@ -23,7 +23,7 @@ cat > config.yaml <<EOF
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
 networking:
-  podSubnet: 10.32.0.0/12 
+  podSubnet: 10.32.0.0/12  # only set if using weave net as cilium uses it's own management of IPs
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
@@ -45,6 +45,19 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/latest/download/we
 ```
 
 See [their docs](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/) for more informations and config options.
+
+### Cilium
+
+Another options is to use cilium for network traffic:
+
+```bash
+helm repo add cilium https://helm.cilium.io/
+helm upgrade -i cilium cilium/cilium -n kube-system -f cilium-values.yaml
+```
+
+Note: cilium runs with all network traffic blocked by default, what did you expect from a CKS course?
+
+First challenge: allow global DNS and kube-system egress access ;)
 
 ### Kubectl completion & alias
 

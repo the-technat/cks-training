@@ -1,0 +1,20 @@
+rollOutCiliumPods: true
+priorityClassName: "system-node-critical"
+annotateK8sNode: true
+containerRuntime:
+  integration: containerd
+  socketPath: /var/run/containerd/containerd.sock
+encryption:
+  enabled: true
+  type: wireguard
+operator:
+  replicas: 1
+l7Proxy: false # not compatible with wireguard encryption
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+    rollOutPods: true
+policyEnforcementMode: "always" # we're practicing for the CKS right?
