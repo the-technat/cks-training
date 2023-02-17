@@ -20,8 +20,8 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
   - rules
     - location
     - custom rules
-- [Verify binaries using their SHA256 checksum (by hard)](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-- Run the kube-bench job
+- [x] [Verify binaries using their SHA256 checksum (by hard)](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+- [x] Run the kube-bench job
 - [x] [How to write netpols that deny things?](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/#restricting-cloud-metadata-api-access)
 - Write a TLS section of an ingress (by hard)
 - [Upgrade your cluster](https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/)

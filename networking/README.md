@@ -50,7 +50,6 @@ We are installing contour for this:
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm upgrade -i contour bitnami/contour --namespace projectcontour --create-namespace -f contour-values.yaml
-kubectl apply -f clusterissuer-le-contour.yaml clusterissuer-le-staging-contour.yaml
 ```
 
 A dummy app is always a good idea:
