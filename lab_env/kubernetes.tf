@@ -30,15 +30,24 @@ module "kubernetes" {
       source_ips        = []
       description       = "cilium vxlan overlay"
     },
-    # {
-    #   direction         = "in"
-    #   protocol          = "udp"
-    #   port              = "6081"
-    #   inject_master_ips = true
-    #   inject_worker_ips = true
-    #   source_ips        = []
-    #   description       = "cilium geneve overlay"
-    # },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "6081"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium geneve overlay"
+    },
+     {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "51871"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium wireguard traffic"
+    },
   ]
 
   additional_fw_rules_worker = [
@@ -60,15 +69,24 @@ module "kubernetes" {
       source_ips        = []
       description       = "cilium vxlan overlay"
     },
-    # {
-    #   direction         = "in"
-    #   protocol          = "udp"
-    #   port              = "6081"
-    #   inject_master_ips = true
-    #   inject_worker_ips = true
-    #   source_ips        = []
-    #   description       = "cilium geneve overlay"
-    # },
+    {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "6081"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium geneve overlay"
+    },
+     {
+      direction         = "in"
+      protocol          = "udp"
+      port              = "51871"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium wireguard traffic"
+    },
    
   ]
 

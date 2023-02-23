@@ -17,4 +17,4 @@ hubble:
   ui:
     enabled: true
     rollOutPods: true
-policyEnforcementMode: "never" # we're practicing for the CKS right?
+policyEnforcementMode: "default" # we're practicing for the CKS right?
