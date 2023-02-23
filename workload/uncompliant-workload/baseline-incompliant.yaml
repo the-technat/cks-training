@@ -5,12 +5,15 @@ metadata:
   labels:
     kubernetes.io/metadata.name: alleaffengaffen
     app.kubernetes.io/name: alleaffengaffen
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/warn: baseline
+    pod-security.kubernetes.io/audit: baseline
   name: alleaffengaffen
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: alleaffengaffen-ch
+  name: new-alleaffengaffen-ch
   namespace: alleaffengaffen
   labels:
     app.kubernetes.io/name: alleaffengaffen
@@ -19,7 +22,7 @@ spec:
   dnsNames:
     - new.alleaffengaffen.ch
   issuerRef:
-    name: letsencrypt-prod
+    name: letsencrypt-staging
     kind: ClusterIssuer
   secretName: alleaffengaffen-tls
 ---
@@ -90,4 +93,12 @@ spec:
         - image: ghcr.io/alleaffengaffen/alleaffengaffen:main
           imagePullPolicy: Always
           name: alleaffengaffen
-          resources: {}
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          securityContext:
+            privileged: true

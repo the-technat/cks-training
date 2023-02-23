@@ -30,7 +30,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 - [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
 - [Write and understand the least-privilege securityContext for a pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 - [Use RuntimeClass and another container runtime](https://kubernetes.io/docs/concepts/containers/runtime-class/)
-- [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards)
+- [x] [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards)
 - [Deep-dive into AdmissionControllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers)
 - [Trivy Operator to scan images](https://github.com/aquasecurity/trivy-operator)
 - [Configure Audit Logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
