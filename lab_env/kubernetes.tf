@@ -39,7 +39,25 @@ module "kubernetes" {
       source_ips        = []
       description       = "cilium geneve overlay"
     },
-     {
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "4244"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium hubble server"
+    },
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "4245"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium hubble relay"
+    },
+    {
       direction         = "in"
       protocol          = "udp"
       port              = "51871"
@@ -51,7 +69,7 @@ module "kubernetes" {
   ]
 
   additional_fw_rules_worker = [
- {
+    {
       direction         = "in"
       protocol          = "tcp"
       port              = "4240"
@@ -78,7 +96,25 @@ module "kubernetes" {
       source_ips        = []
       description       = "cilium geneve overlay"
     },
-     {
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "4244"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium hubble server"
+    },
+    {
+      direction         = "in"
+      protocol          = "tcp"
+      port              = "4245"
+      inject_master_ips = true
+      inject_worker_ips = true
+      source_ips        = []
+      description       = "cilium hubble relay"
+    },
+    {
       direction         = "in"
       protocol          = "udp"
       port              = "51871"
@@ -87,7 +123,7 @@ module "kubernetes" {
       source_ips        = []
       description       = "cilium wireguard traffic"
     },
-   
+
   ]
 
   master_nodes = [
