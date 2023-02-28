@@ -56,6 +56,25 @@ helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm upgrade -i falco falcosecurity/falco --namespace falco --create-namespace
 ```
 
+## SecurityContext
+
+Those are the best-practices I learned for writing Dockerfiles and YAML:
+
+- all binaries should be owned by root:root with 755 (so that any user can execute them)
+- all app data that comes packaged with the container should also be owned by root:root with 755, it's a bad habit to chown them to a specific app user that has acess as this user could change
+- write data to a specific or better configurable tmp dir, k8s or the csi driver will ensure the pod is allowed to write there
+- if you really need to specify the user, use a UID and not a name
+
+In K8s:
+
+- prevent privilegeEscalation
+- set the runAsUser, runAsGroup and fsGroup to random numbers (best would be above 10000 to not clash with the host) -> OSE sets them randomly using a controller
+- drop all caps
+- runAsNonRoot
+- enforce the read-only mount of the filesystem
+- use Seccomop profile RuntimeDefault to avoid any ambicous system calls
+- use AppArmor profile runtime/default to avoid any other ambitous actions on the host or create your own AppArmor profiles for more security
+
 ## AppArmor
 
 ## Seccomp
