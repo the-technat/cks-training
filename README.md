@@ -28,7 +28,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 - Linux basics: locally running services / open ports / connections (e.g netstat and tcpdump master)
 - [Create a custom AppArmor profile for a pod](https://kubernetes.io/docs/tutorials/security/apparmor/) -> [Docs](https://gitlab.com/apparmor/apparmor/-/wikis/Documentation)
 - [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
-- [Write and understand the least-privilege securityContext for a pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+- [x] [Write and understand the least-privilege securityContext for a pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 - [Use RuntimeClass and another container runtime](https://kubernetes.io/docs/concepts/containers/runtime-class/)
 - [x] [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards)
 - [Deep-dive into AdmissionControllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers)
