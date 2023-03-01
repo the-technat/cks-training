@@ -35,4 +35,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 - [Trivy Operator to scan images](https://github.com/aquasecurity/trivy-operator)
 - [Configure Audit Logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
 
-One last thing: if more than half of the container images out there would follow [this best-practice guide](https://sysdig.com/blog/dockerfile-best-practices/) the world would be much easier.
+## Fazit of the CKS
+
+> Docker and Kubernetes massively transformed the way how software is packaged, shipped and run. But with one major drawback: They ignored security completely in order to gain speed and become adopted faster. So the biggest challenge in containeraized environments today, is to make them secure. By secure I don't mean any rocket sience that no one understands, just follow [some basic best-practices](https://sysdig.com/blog/dockerfile-best-practices/) when packaging container images and most of the work is done.
+
