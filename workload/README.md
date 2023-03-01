@@ -75,6 +75,8 @@ In K8s:
 - use Seccomop profile RuntimeDefault to avoid any ambicous system calls
 - use AppArmor profile runtime/default to avoid any other ambitous actions on the host or create your own AppArmor profiles for more security
 
+One last thing: if more than half of the container images out there would follow [this best-practice guide](https://sysdig.com/blog/dockerfile-best-practices/) the container world would be much more secure.
+
 ## AppArmor
 
 ## Seccomp
