@@ -48,7 +48,7 @@ See [their docs](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/)
 
 ### Cilium
 
-Another options is to use cilium for network traffic:
+Another option is to use cilium for network traffic:
 
 ```bash
 helm repo add cilium https://helm.cilium.io/

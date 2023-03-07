@@ -7,6 +7,7 @@ containerRuntime:
 encryption:
   enabled: true
   type: wireguard
+  nodeEncryption: true
 operator:
   replicas: 1
 l7Proxy: false # not compatible with wireguard encryption
