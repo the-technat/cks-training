@@ -77,6 +77,14 @@ In K8s:
 
 One last thing: if more than half of the container images out there would follow [this best-practice guide](https://sysdig.com/blog/dockerfile-best-practices/) the container world would be much more secure.
 
+## RuntimeClass
+
+First configure containerd to support multiple container runtimes: <https://github.com/containerd/containerd/blob/main/docs/cri/config.md>
+
+Then apply the `runtimeclasses.yaml`
+
+And of course install the other container runtime. This depends from project to project.
+
 ## AppArmor
 
 ## Seccomp
