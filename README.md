@@ -21,7 +21,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
     - location
     - custom rules
 - [Create a custom AppArmor profile for a pod](https://kubernetes.io/docs/tutorials/security/apparmor/) -> [Docs](https://gitlab.com/apparmor/apparmor/-/wikis/Documentation)
-- [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
+- [x] [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
 - [x] [Deep-dive into AdmissionControllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers)
 - [x] [Use RuntimeClass and another container runtime](https://kubernetes.io/docs/concepts/containers/runtime-class/)
 - [x] [Trivy Operator to scan images](https://github.com/aquasecurity/trivy-operator)
