@@ -4,7 +4,7 @@ Resources related to my CKS training
 
 ## Lab Env
 
-See [lab_env](./lab_env) for how to setup.
+See [lab_env](./00_lab_env) for how to setup.
 
 ## Awesome CKS Software
 

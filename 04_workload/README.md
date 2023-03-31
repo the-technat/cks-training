@@ -31,7 +31,7 @@ helm upgrade -i \
 And then get a good ruleset from here:
 
 ```bash
-kubectl apply -k policies
+kubectl apply -k kyverno_policies
 ```
 
 The ruleset will do the following:
