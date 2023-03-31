@@ -27,7 +27,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 - [x] [Configure Audit Logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
 - [x] [Upgrade your cluster](https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/)
 - [x] [Write a TLS section of an ingress (by hard)](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls)
-- [x] Linux basics: locally running services / open ports / connections (e.g netstat and tcpdump master)
+- [x] [Linux basics: locally running services / open ports / connections (e.g netstat and tcpdump master)](https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux)
 - [x] [Verify binaries using their SHA256 checksum (by hard)](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [x] [Run the kube-bench job](https://github.com/aquasecurity/kube-bench)
 - [x] [How to write netpols that deny things?](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/#restricting-cloud-metadata-api-access)
