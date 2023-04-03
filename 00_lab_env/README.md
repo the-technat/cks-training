@@ -33,11 +33,11 @@ EOF
 sudo kubeadm init --upload-certs --config config.yaml
 ```
 
-Note: I'm using containerd using systemd cgroups. I don't see any reason for using docker
+**Important: approve the node CSRs before you continue**
 
-### Cilium
+### Option 1 - Cilium
 
-My all-tiem favourite CNI:
+My all-time favourite CNI:
 
 ```bash
 helm repo add cilium https://helm.cilium.io/
@@ -47,6 +47,11 @@ helm upgrade -i cilium cilium/cilium -n kube-system -f cilium-values.yaml
 Note: cilium runs with all network traffic blocked by default, what did you expect from a CKS course?
 
 First challenge: allow global DNS and kube-system egress access ;)
+
+<details>
+
+<summary>Option 2 - Weave Net</summary>
+
 
 ### Weave Net
 
@@ -59,6 +64,8 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/latest/download/we
 ```
 
 See [their docs](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/) for more informations and config options.
+
+</details>
 
 ### Kubectl completion & alias
 
@@ -77,14 +84,6 @@ echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 
 Some apps you just want to have configured.
 
-### Metrics server
-
-```bash
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-```
-
-Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs>, but you only have to approve the CSR, the rest is done
-
 ### hcloud-cm
 
 ```bash
@@ -92,7 +91,15 @@ kubectl -n kube-system create secret generic hcloud --from-literal=token=<hcloud
 kubectl apply -f  https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/latest/download/ccm.yaml
 ```
 
-Note: requires that the nodes were initialized with `--cloud-provider=external` (should be the default with my terraform module).
+Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs>, but you only have to approve the CSR, the rest is done
+
+### Metrics server
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs>, but should already be done during installation.
 
 ### cert-manager
 
