@@ -14,6 +14,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 
 ## Open Topics for learning
 
+- <https://github.com/vedmichv/CKS-Certified-Kubernetes-Security-Specialist>
 - [Falco](https://falco.org/docs/)
   - correct deployment (mind the different methods, understand how it could be installed)
   - understand and write rules

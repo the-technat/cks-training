@@ -52,7 +52,6 @@ First challenge: allow global DNS and kube-system egress access ;)
 
 <summary>Option 2 - Weave Net</summary>
 
-
 ### Weave Net
 
 Other CNI option commonly see in CKS courses.

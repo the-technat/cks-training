@@ -47,15 +47,6 @@ Really simple dynamic code analysis tool:
 k apply -f <https://raw.githubusercontent.com/aquasecurity/tracee/main/deploy/kubernetes/tracee/tracee.yaml>
 ```
 
-## Falco
-
-Let's deploy falco on our hosts to do dynamic code analysis.
-
-```bash
-helm repo add falcosecurity https://falcosecurity.github.io/charts
-helm upgrade -i falco falcosecurity/falco --namespace falco --create-namespace
-```
-
 ## SecurityContext
 
 Those are the best-practices I learned for writing Dockerfiles and YAML:
@@ -87,4 +78,28 @@ And of course install the other container runtime. This depends from project to 
 
 ## AppArmor
 
+Used to create profils that restrict access to files/privileges and more for a process.
+
 ## Seccomp
+
+Profile to define what syscalls are allowed and which ones not.
+
+## Falco
+
+Runtime security tool, your big brother watching over you and seeing everything you do.
+
+### Installation
+
+Not that easy, but since we practice for the CKS, we use the most obvious installation method which is done directly on the host.
+
+Use these commands:
+
+```bash
+curl -s https://falco.org/repo/falcosecurity-packages.asc | sudo apt-key add -
+echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
+sudo apt-get update -y
+FALCO_FRONTEND=noninteractive sudo apt-get install -y falco
+sudo systemctl enable --now falco-modern-bpf.service
+```
+
+Upstream docs: <https://falco.org/docs/getting-started/installation/>
