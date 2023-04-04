@@ -1,0 +1,49 @@
+ty: true
+
+controller:
+  kind: daemonset
+
+services:
+  # Example configuration for the "k8sauditlog" plugin
+  # - name: k8saudit-webhook
+  #   type: NodePort
+  #   ports:
+  #     - port: 9765 # See plugin open_params
+  #       nodePort: 30007
+  #       protocol: TCP
+
+driver:
+  enabled: true
+  kind: modern-bpf
+  loader:
+    enabled: true
+
+customRules:
+  {}
+  # Although Falco comes with a nice default rule set for detecting weird
+  # behavior in containers, our users are going to customize the run-time
+  # security rule sets or policies for the specific container images and
+  # applications they run. This feature can be handled in this section.
+  #
+  # Example:
+  #
+  # rules-traefik.yaml: |-
+  #   [ rule body ]
+
+falcosidekick:
+  enabled: true
+  fullfqdn: falco.alleaffengaffen.ch
+  webui:
+    enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+      - host: falco.alleaffengaffen.ch
+        paths:
+        - path: /
+      tls:
+      - secretName: falcosidekick-tls
+        hosts:
+        - falco.alleaffengaffen.ch

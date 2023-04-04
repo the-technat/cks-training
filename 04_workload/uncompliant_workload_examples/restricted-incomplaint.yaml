@@ -10,44 +10,6 @@ metadata:
     # pod-security.kubernetes.io/audit: restricted
   name: alleaffengaffen
 ---
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: new-alleaffengaffen-ch
-  namespace: alleaffengaffen
-  labels:
-    app.kubernetes.io/name: alleaffengaffen
-spec:
-  commonName: new.alleaffengaffen.ch
-  dnsNames:
-    - new.alleaffengaffen.ch
-  issuerRef:
-    name: letsencrypt-staging
-    kind: ClusterIssuer
-  secretName: alleaffengaffen-tls
----
-# https://projectcontour.io/docs/v1.24.0/config/fundamentals/
-apiVersion: projectcontour.io/v1
-kind: HTTPProxy
-metadata:
-  name: basic
-  namespace: alleaffengaffen
-  labels:
-    app.kubernetes.io/name: alleaffengaffen
-spec:
-  virtualhost:
-    fqdn: new.alleaffengaffen.ch
-    tls:
-      secretName: alleaffengaffen-tls
-  routes:
-    - conditions:
-        - prefix: /
-      services:
-        - name: alleaffengaffen
-          port: 80
-      loadBalancerPolicy:
-        strategy: Cookie
----
 apiVersion: v1
 kind: Service
 metadata:

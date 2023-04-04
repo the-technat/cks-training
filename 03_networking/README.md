@@ -1,6 +1,6 @@
 # Networking
 
-## Calico
+## Option 1 - Calico
 
 Prerequisite: requires tcp/179, udp/4789 and ipip node-to-node connectivity (see [here](https://projectcalico.docs.tigera.io/getting-started/kubernetes/requirements#network-requirements))
 
@@ -43,13 +43,57 @@ Now all traffic between pods is encrypted using wireguard. In addition all traff
 
 [Reference Docs](https://projectcalico.docs.tigera.io/security/encrypt-cluster-pod-traffic)
 
+<details>
+
+<summary>Option 2 - Weave Net</summary>
+
+## Option 2 - Weave Net
+
+Other CNI option commonly see in CKS courses.
+
+Prerequisite: weave net requires tcp 6783 & udp 6783/6784 node-to-node connectivity -> must be changed (currently Terraform configures rules for cilium)
+
+```bash
+kubectl apply -f https://github.com/weaveworks/weave/releases/latest/download/weave-daemonset-k8s.yaml
+```
+
+See [their docs](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/) for more informations and config options.
+
+</details>
+
 ## Ingress Controller
 
-We are installing contour for this:
+### Option 1 - ingress-nginx
+
+The "official" ingress-controller from the Kubernetes community
+
+See [here](https://kubernetes.github.io/ingress-nginx/deploy/) for the installation instructions.
+
+I'm doing this with:
+
+```bash
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace \
+  --set 'controller.service.annotations.load-balancer\.hetzner\.cloud\/network-zone'=eu-central
+```
+
+<details>
+
+<summary>Option 2 - Contour</summary>
+
+### Option 2 - Contour
+
+Contour is a newly designed ingess controller that configures envoy in the background. It shall be fast they say, and it supports fancy stuff that ingress-nginx sometimes cannot do.
+
+But it's simply a helm-chart too:
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm upgrade -i contour bitnami/contour --namespace projectcontour --create-namespace -f contour-values.yaml
+helm upgrade -i contour bitnami/contour \
+  --namespace projectcontour \
+  --create-namespace \
+  --set 'envoy.serivce.annotations.load-balancer\.hetzner\.cloud\/network-zone'=eu-central 
 ```
 
 A dummy app is always a good idea:
@@ -61,6 +105,47 @@ kubectl apply -f httpproxy_example.yaml
 The app uses a `HTTPProxy` by default and of course deployes THE only alleaffengaffen app ;)
 
 For more details take a look at the [contour docs](https://projectcontour.io/docs/v1.24.0/architecture/).
+
+</details>
+
+### cert-manager
+
+May be useful for certificate management later on:
+
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+cat <<EOF | kubectl create -f - 
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: banane@alleaffengaffen.ch
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: banane@alleaffengaffen.ch
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+EOF
+```
 
 ## Service Mesh
 
@@ -119,7 +204,7 @@ metadata:
   name: linkerd-dashboard
   namespace: linkerd
 spec:
-  ingressClassName: contour
+  ingressClassName: nginx
   rules:
   - host: linkerd.alleaffengaffen.ch
     http:
@@ -157,7 +242,7 @@ metadata:
   name: emojivoto
   namespace: emojivoto
 spec:
-  ingressClassName: contour
+  ingressClassName: nginx
   rules:
   - host: emoji.alleaffengaffen.ch
     http:

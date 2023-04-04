@@ -31,13 +31,12 @@ helm upgrade -i \
 And then get a good ruleset from here:
 
 ```bash
-kubectl apply -k kyverno_policies
+helm upgrade -i \
+  kyverno-policies kyverno/kyverno-policies \
+  -n kyverno \
+  --set podSecurityStandard=restricted \
+  --set validationFailureAction=audit 
 ```
-
-The ruleset will do the following:
-
-- All pods no matter what source they are get a securityContext that is as restrictive as it can be
-- If an app needs to override one of the securityContext values (e.g because it needs more privileges than nothing to work), an exception for this specific line of the securityContext can be made
 
 ## Tracee
 
@@ -72,7 +71,27 @@ One last thing: if more than half of the container images out there would follow
 
 First configure containerd to support multiple container runtimes: <https://github.com/containerd/containerd/blob/main/docs/cri/config.md>
 
-Then apply the `runtimeclasses.yaml`
+Then apply the `runtimeclasses.yaml`:
+
+```yaml
+apiVersion: node.k9s.io/v1
+kind: RuntimeClass
+metadata:
+  name: crun
+handler: crun
+---
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: gvisor
+handler: gvisor
+---
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: kata
+handler: kata
+```
 
 And of course install the other container runtime. This depends from project to project.
 
@@ -90,16 +109,11 @@ Runtime security tool, your big brother watching over you and seeing everything 
 
 ### Installation
 
-Not that easy, but since we practice for the CKS, we use the most obvious installation method which is done directly on the host.
-
-Use these commands:
+Following [this guide](https://falco.org/docs/getting-started/try-falco/try-falcosidekick-on-kubernetes/), I just install the helm chart:
 
 ```bash
-curl -s https://falco.org/repo/falcosecurity-packages.asc | sudo apt-key add -
-echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
-sudo apt-get update -y
-FALCO_FRONTEND=noninteractive sudo apt-get install -y falco
-sudo systemctl enable --now falco-modern-bpf.service
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm upgrade -i falco falcosecurity/falco --create-namespace -n falco -f falco-values.yaml
 ```
 
-Upstream docs: <https://falco.org/docs/getting-started/installation/>
+### UI

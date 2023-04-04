@@ -48,6 +48,8 @@ Note: cilium runs with all network traffic blocked by default, what did you expe
 
 First challenge: allow global DNS and kube-system egress access ;)
 
+In the [networking section](../03_networking/README.md) there is a closer look at different CNI plugins.
+
 <details>
 
 <summary>Option 2 - Weave Net</summary>
@@ -83,14 +85,22 @@ echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 
 Some apps you just want to have configured.
 
-### hcloud-cm
+### hcloud-ccm
 
 ```bash
 kubectl -n kube-system create secret generic hcloud --from-literal=token=<hcloud API token>
-kubectl apply -f  https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/latest/download/ccm.yaml
+kubectl apply -f  https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/latest/download/ccm.yaml -n kube-system
 ```
 
 Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs>, but you only have to approve the CSR, the rest is done
+
+### hetzner-csi
+
+Uses the same token in the kube-system namespace as the hcloud-ccm
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/main/deploy/kubernetes/hcloud-csi.yml -n kube-system
+```
 
 ### Metrics server
 
@@ -99,9 +109,3 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/late
 ```
 
 Requires <https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs>, but should already be done during installation.
-
-### cert-manager
-
-```bash
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
-```
