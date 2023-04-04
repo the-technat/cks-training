@@ -1,16 +1,15 @@
-ty: true
+tty: true
 
 controller:
   kind: daemonset
 
 services:
-  # Example configuration for the "k8sauditlog" plugin
-  # - name: k8saudit-webhook
-  #   type: NodePort
-  #   ports:
-  #     - port: 9765 # See plugin open_params
-  #       nodePort: 30007
-  #       protocol: TCP
+ - name: k8saudit-webhook
+   type: NodePort
+   ports:
+     - port: 9765 # See plugin open_params
+       nodePort: 30007
+       protocol: TCP
 
 driver:
   enabled: true
@@ -18,17 +17,19 @@ driver:
   loader:
     enabled: true
 
-customRules:
-  {}
-  # Although Falco comes with a nice default rule set for detecting weird
-  # behavior in containers, our users are going to customize the run-time
-  # security rule sets or policies for the specific container images and
-  # applications they run. This feature can be handled in this section.
-  #
-  # Example:
-  #
-  # rules-traefik.yaml: |-
-  #   [ rule body ]
+falcoctl:
+  artifact:
+    install:
+      enabled: true
+    follow:
+      enabled: true
+  config:
+    artifact:
+      install:
+        resolveDeps: false
+        refs: [falco-rules:0, k8saudit-rules:0.5]
+      follow:
+        refs: [falco-rules:0, k8saudit-rules:0.5]
 
 falcosidekick:
   enabled: true
@@ -47,3 +48,22 @@ falcosidekick:
       - secretName: falcosidekick-tls
         hosts:
         - falco.alleaffengaffen.ch
+
+falco:
+  rules_file:
+    - /etc/falco/falco_rules.yaml
+    - /etc/falco/k8s_audit_rules.yaml
+    - /etc/falco/rules.d
+  plugins:
+    - name: k8saudit
+      library_path: libk8saudit.so
+      init_config:
+      #   maxEventSize: 262144
+      #   webhookMaxBatchSize: 12582912
+      #   sslCertificate: /etc/falco/falco.pem
+      open_params: "http://:9765/k8s-audit"
+    - name: json
+      library_path: libjson.so
+      init_config: ""
+
+  load_plugins: [k8saudit, json]

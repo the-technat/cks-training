@@ -116,4 +116,46 @@ helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm upgrade -i falco falcosecurity/falco --create-namespace -n falco -f falco-values.yaml
 ```
 
-### UI
+### K8s Audit Logs
+
+To get audit-logs from the kube-apiserver, see the [kube-apiserver-hardening](../01_kube-apiserver-hardening/README.md) section. Here just some hints:
+
+- use at least Metadata for all resources
+- set `--audit-log-path=-`
+- set `--audit-webhook-config-path=/myfile.yaml` with content:
+
+  ```yaml
+  apiVersion: v1
+  kind: Config
+  clusters:
+  - name: falco
+    cluster:
+      # certificate-authority: /path/to/ca.crt # for https
+      server: <http://localhost:30007/k8s-audit>
+  contexts:
+  - context:
+      cluster: falco
+      user: ""
+    name: default-context
+  current-context: default-context
+  preferences: {}
+  users: []
+  ```
+
+- the rest is configured throuth the helm chart (e.g enabling the plugin, listening on the hostport...)
+
+### Custom Rules
+
+Here's a custom rule in helm values format:
+
+```yaml
+customRules:
+  banana_rules.yaml: |-
+    - rule: alleaffengaffen app
+      desc: very dangerous app
+      condition: >
+        container.id != host and
+        container.image contains "alleaffengaffen"
+      output: A new alleaffengaffen app has spawned! (container=%container.name)
+      priority: NOTICE
+```

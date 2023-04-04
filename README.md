@@ -15,11 +15,7 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 ## Open Topics for learning
 
 - <https://github.com/vedmichv/CKS-Certified-Kubernetes-Security-Specialist>
-- [Falco](https://falco.org/docs/)
-  - correct deployment (mind the different methods, understand how it could be installed)
-  - understand and write rules
-    - location
-    - custom rules
+- [x] [Falco](https://falco.org/docs/): Installation, k8s audit events and custom rules
 - [x] [Create a custom AppArmor profile for a pod](https://kubernetes.io/docs/tutorials/security/apparmor/) -> [Docs](https://gitlab.com/apparmor/apparmor/-/wikis/Documentation)
 - [x] [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
 - [x] [Deep-dive into AdmissionControllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers)
