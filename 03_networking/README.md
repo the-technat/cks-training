@@ -128,7 +128,7 @@ spec:
     solvers:
       - http01:
           ingress:
-            class: nginx
+            class: contour
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -143,7 +143,7 @@ spec:
     solvers:
       - http01:
           ingress:
-            class: nginx
+            class: contour
 EOF
 ```
 

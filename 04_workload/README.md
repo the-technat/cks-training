@@ -122,7 +122,7 @@ To get audit-logs from the kube-apiserver, see the [kube-apiserver-hardening](..
 
 - use at least Metadata for all resources
 - set `--audit-log-path=-`
-- set `--audit-webhook-config-path=/myfile.yaml` with content:
+- set `--audit-webhook-config-file=/myfile.yaml` with content:
 
   ```yaml
   apiVersion: v1
