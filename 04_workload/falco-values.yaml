@@ -56,7 +56,7 @@ customRules:
       desc: very dangerous app
       condition: >
         container.id != host and container.image contains "alleaffengaffen" and
-        evt.is_open_read or evt.is_open_write
+        evt.is_open_read = true or evt.is_open_write = true
       output: alleaffengaffen opened %fd.name (container=%container.id,proc=%proc.name,pid=%proc.pid)
       priority: ERROR
 

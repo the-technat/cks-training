@@ -10,13 +10,11 @@ See [lab_env](./00_lab_env) for how to setup.
 
 Probably already known but here again, a [Vulnerability Database](https://nvd.nist.gov/vuln/search).
 
-See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awesome-cks-tools) for some cool security tools.
+For an up-to-date list see the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awesome-cks-tools).
 
 ## Open Topics for learning
 
-- https://github.com/bmuschko/cks-crash-course
-- <https://github.com/vedmichv/CKS-Certified-Kubernetes-Security-Specialist>
-- [x] [Falco](https://falco.org/docs/): Installation, k8s audit events and custom rules
+- [x] [Falco](https://falco.org/docs/)
 - [x] [Create a custom AppArmor profile for a pod](https://kubernetes.io/docs/tutorials/security/apparmor/) -> [Docs](https://gitlab.com/apparmor/apparmor/-/wikis/Documentation)
 - [x] [Creat a custom seccomp profile for a pod](https://kubernetes.io/docs/tutorials/security/seccomp/)
 - [x] [Deep-dive into AdmissionControllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers)
@@ -31,6 +29,11 @@ See the [Awesome CKS Tools list](https://github.com/stars/the-technat/lists/awes
 - [x] [How to write netpols that deny things?](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/#restricting-cloud-metadata-api-access)
 - [x] [Write and understand the least-privilege securityContext for a pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 - [x] [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards)
+
+## Practice for exam
+
+- https://github.com/bmuschko/cks-crash-course
+- https://killer.sh/
 
 ## Fazit of the CKS
 
