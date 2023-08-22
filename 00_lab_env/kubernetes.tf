@@ -140,7 +140,7 @@ module "kubernetes" {
   worker_nodes = [
     {
       name        = "minion-0"
-      server_type = "cpx21"
+      server_type = "cpx11"
       image       = "ubuntu-22.04"
       location    = "fsn1"
       labels      = {}
