@@ -1,5 +1,5 @@
 module "kubernetes" {
-  source = "git::https://github.com/alleaffengaffen/terraform-hcloud-kubernetes.git?ref=master"
+  source = "./module"
 
   cluster_name = "cks_gugus"
   region       = "eu-central"

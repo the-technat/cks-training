@@ -1,10 +1,10 @@
-# cks_training
+# cks-training
 
-Resources related to my CKS training
+Resources related to my CKS training. Will be used whenever I have to renew my CKS.
 
 ## Lab Env
 
-See [lab_env](./00_lab_env) for how to setup.
+See [lab_env](./00_lab_env) for how to setup. It's probably outdated and needs an update.
 
 ## Awesome CKS Software
 

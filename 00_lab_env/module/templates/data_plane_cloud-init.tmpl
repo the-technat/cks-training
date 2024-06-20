@@ -1,0 +1,32 @@
+#cloud-config control_plane node
+
+users:
+  - name: ${ssh_user}
+    groups: sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL # Allow any operations using sudo
+    lock_passwd: True # disable password login
+    gecos: "Admin user created by Terraform"
+    shell: /bin/bash
+    ssh_authorized_keys:
+    %{ for ssh_key in ssh_keys ~}
+     - ${ssh_key}
+    %{ endfor ~} 
+
+write_files:
+- path: /etc/ssh/sshd_config
+  content: |
+    Port ${ssh_port}
+    PermitRootLogin no
+    PermitEmptyPasswords no
+    PasswordAuthentication no
+    PubkeyAuthentication yes
+    Include /etc/ssh/sshd_config.d/*.conf  
+    ChallengeResponseAuthentication no
+    UsePAM yes
+    # Allow client to pass locale environment variables
+    AcceptEnv LANG LC_*
+    X11Forwarding no
+    PrintMotd no
+    Subsystem    sftp    /usr/lib/openssh/sftp-server
+runcmd:
+  - systemctl restart sshd
